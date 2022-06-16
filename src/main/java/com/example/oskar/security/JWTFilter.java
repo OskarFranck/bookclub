@@ -1,6 +1,8 @@
 package com.example.oskar.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,17 @@ import java.io.IOException;
 
 @Component
 public class JWTFilter extends OncePerRequestFilter {
-    @Autowired
     private UserDetailService userDetailService;
-    @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    public void setUserDetailService(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
+    }
+    @Autowired
+    public void setJwtUtil(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 

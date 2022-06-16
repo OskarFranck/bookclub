@@ -19,12 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
+    //TODO split up security config in to separate beans (wh WebSecConfAdapter)
     private UserDetailService userDetailService;
-    @Autowired
     private JWTFilter jwtFilter;
+
+    @Autowired
+    public void setJwtFilter(JWTFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+    @Autowired
+    public void setUserDetailService(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

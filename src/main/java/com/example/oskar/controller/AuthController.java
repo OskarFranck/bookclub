@@ -1,7 +1,7 @@
 package com.example.oskar.controller;
 
+import com.example.oskar.entity.UserEntity;
 import com.example.oskar.model.Credentials;
-import com.example.oskar.model.UserModel;
 import com.example.oskar.repository.UserRepository;
 import com.example.oskar.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +21,34 @@ import java.util.Map;
 @RequestMapping("api/auth")
 public class AuthController {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private JWTUtil jwtUtil;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    public void setJwtUtil(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
     @PostMapping("/register")
-    public Map<String, Object> RegisterHandler(@RequestBody UserModel userModel) {
-        String encodedPassword = passwordEncoder.encode(userModel.getPassword());
-        userModel.setPassword(encodedPassword);
-        userRepository.save(userModel);
-        String token = jwtUtil.generateToken(userModel.getUsername());
+    public Map<String, Object> RegisterHandler(@RequestBody UserEntity userEntity) {
+        String encodedPassword = passwordEncoder.encode(userEntity.getPassword());
+        userEntity.setPassword(encodedPassword);
+        userRepository.save(userEntity);
+        String token = jwtUtil.generateToken(userEntity.getUsername());
         return Collections.singletonMap("jwt-token", token);
     }
 
