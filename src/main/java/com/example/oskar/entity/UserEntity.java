@@ -1,5 +1,6 @@
 package com.example.oskar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,7 @@ public class UserEntity {
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_user",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-            referencedColumnName = "book_id"))
-    private List<Book> books;
-
-
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<BookReview> reviews;
 }

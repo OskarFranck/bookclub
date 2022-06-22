@@ -1,14 +1,12 @@
 package com.example.oskar.service;
 
 import com.example.oskar.entity.Book;
-import com.example.oskar.entity.UserEntity;
 import com.example.oskar.repository.BookRepository;
 import com.example.oskar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,11 +40,13 @@ public class BookService {
     }
 
     public Book addBook(Book book) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserEntity userEntity = userRepository.findByUsername(username).orElse(null);
-        if (userEntity == null) throw new RuntimeException("No user found");
-        logger.info("Bookservice user " + userEntity);
-        book.setUser_id(userEntity.getUser_id());
+//        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        UserEntity userEntity = userRepository.findByUsername(username).orElse(null);
+//        if (userEntity == null) throw new RuntimeException("No user found");
+//        logger.info("Bookservice user " + userEntity);
+//        book.setUser_id(userEntity.getUser_id());
+        logger.info("add book: " + book.getAuthors());
+        book.setAuthors(book.getAuthors());
         return bookRepository.save(book);
     }
 

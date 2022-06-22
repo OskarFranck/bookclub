@@ -5,7 +5,7 @@ import com.example.oskar.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+@Service
 public class ISBNService {
     private BookRepository bookRepository;
 

@@ -15,5 +15,6 @@ public class BookModel {
     private String description;
     private int release_year;
     private float rating;
-    private List<Author> authors;
+    private List<String> authors;
+    private String user_id;
 }

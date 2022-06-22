@@ -1,5 +1,6 @@
 package com.example.oskar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,9 +22,9 @@ public class Book {
     private int release_year;
     private boolean read;
     private float rating;
-    private String user_id;
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST)
     private List<Author> authors;
-    @ManyToMany(mappedBy = "books")
-    private List<UserEntity> user;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<BookReview> reviews;
 }
